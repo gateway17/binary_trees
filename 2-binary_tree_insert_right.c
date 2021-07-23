@@ -7,32 +7,24 @@
  * @value: The value to store in the new node.
  *
  * Return: If parent is NULL or an error occurs - NULL.
- *         Otherwise - a pointer to the new node.
  */
-
-
 binary_tree_t *binary_tree_insert_right(binary_tree_t *parent, int value)
 {
-  
+	binary_tree_t *right_child;
 
-  binary_tree_t *node;
+	if (parent == NULL)
+		return (NULL);
 
-  if (parent == NULL)
-    return (NULL);
+	right_child = binary_tree_node(parent, value);
+	if (right_child == NULL)
+		return (NULL);
 
-  node = binary_tree_node(parent, value);
-  
-  if ( node == NULL)
-    return (NULL);
-  
+	if (parent->right != NULL)
+	{
+		right_child->right = parent->right;
+		parent->right->parent = right_child;
+	}
+	parent->right = right_child;
 
-  if (parent->right != NULL)
-  {
-    
-    node->right = parent->right;
-    parent->right->parent = node;
-  }
-  parent->right = node;
-
-  return(node);
+	return (right_child);
 }
